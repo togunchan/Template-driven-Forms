@@ -21,6 +21,10 @@ export class ProductComponent {
     console.log("New Product: "+ this.jsonProduct);
   }
 
+  log(m){
+    console.log(m);
+  }
+
   constructor() { }
 
 
