@@ -27,6 +27,10 @@ export class ProductComponent {
     console.log(x);
   }
 
+  submitForm(form){
+    console.log(form);
+  }
+
   getValidationErrors(state: any) {
     let ctrlName: string = state.name;
     let messages: string[] = [];
