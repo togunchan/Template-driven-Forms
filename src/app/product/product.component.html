@@ -8,12 +8,12 @@
 
         <div class="form-group">
           <label>Name</label>
-          <input required minlength="3" maxlength="10" pattern="^[A-Za-z ]+$" [(ngModel)]="newProduct.name" name="pName" #name="ngModel"  type="text" class="form-control">
+          <input required minlength="3" maxlength="10" pattern="^[A-Za-z ]+$" [(ngModel)]="newProduct.name" name="name" #name="ngModel"  type="text" class="form-control" (change)="log(name)">
           <div class="alert alert-danger" *ngIf="!name.valid && name.touched">
             <!--aşağıdaki "name" tanımlanan "#name"dir-->
-            <p *ngIf="name.errors.required">Name is required.</p>
-            <p *ngIf="name.errors.pattern">Only letters and spaces</p>
-            <p *ngIf="name.errors.minlength">min. 3 characters</p>
+            <p *ngFor="let error of getValidationErrors(name)">
+              {{error}}
+            </p>
           </div>
         </div>
 
