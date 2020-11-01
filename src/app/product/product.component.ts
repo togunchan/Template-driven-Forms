@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Product } from '../product.model';
 import { ProductRepository } from '../repository.model';
 
@@ -27,8 +28,16 @@ export class ProductComponent {
     console.log(x);
   }
 
-  submitForm(form){
-    console.log(form);
+  formSubmitted: boolean = false;
+
+  submitForm(form: NgForm) {
+    this.formSubmitted = true;
+    if(form.valid){
+      this.addProduct(this.newProduct);
+      this.newProduct = new Product();
+      form.reset();
+      this.formSubmitted = false;
+    }
   }
 
   getValidationErrors(state: any) {

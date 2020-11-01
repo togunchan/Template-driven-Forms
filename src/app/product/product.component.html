@@ -2,7 +2,12 @@
   <div class="row">
     <div class="col-8">
       <div class="m-3">
+        <!-- submitForm(form) içindeki form == #form="ngForm" -->
         <form #form="ngForm" (ngSubmit)="submitForm(form)">
+
+          <div class="bg-danger text-white p-3 my-2" *ngIf="formSubmitted && form.invalid">
+            Bir hata oluştu. Bilgilerinizi kontrol ediniz.
+          </div>
 
           <div class="bg-info text-white m-2 p-2">
             {{jsonProduct}}
@@ -11,7 +16,7 @@
           <div class="form-group">
             <label>Name</label>
             <input required minlength="3" maxlength="10" pattern="^[A-Za-z ]+$" [(ngModel)]="newProduct.name" name="name" #name="ngModel" type="text" class="form-control" (change)="log(name)">
-            <div class="alert alert-danger" *ngIf="!name.valid && name.touched">
+            <div class="alert alert-danger" *ngIf="(formSubmitted || name.dirty) && name.invalid">
               <!--aşağıdaki "name" tanımlanan "#name"dir-->
               <p *ngFor="let error of getValidationErrors(name)">
                 {{error}}
