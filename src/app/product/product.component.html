@@ -7,6 +7,11 @@
 
           <div class="bg-danger text-white p-3 my-2" *ngIf="formSubmitted && form.invalid">
             Bir hata oluştu. Bilgilerinizi kontrol ediniz.
+            <ul>
+              <li *ngFor="let error of getFormValidationErrors(form)">
+                {{error}}
+              </li>
+            </ul>
           </div>
 
           <div class="bg-info text-white m-2 p-2">
@@ -15,12 +20,16 @@
 
           <div class="form-group">
             <label>Name</label>
-            <input required minlength="3" maxlength="10" pattern="^[A-Za-z ]+$" [(ngModel)]="newProduct.name" name="name" #name="ngModel" type="text" class="form-control" (change)="log(name)">
-            <div class="alert alert-danger" *ngIf="(formSubmitted || name.dirty) && name.invalid">
+            <input required minlength="3" maxlength="10" pattern="^[A-Za-z ]+$" [(ngModel)]="newProduct.name"
+              name="name" #name="ngModel" type="text" class="form-control" (change)="log(name)">
+            <div class="alert alert-danger" *ngIf="(formSubmitted) && name.invalid">
               <!--aşağıdaki "name" tanımlanan "#name"dir-->
-              <p *ngFor="let error of getValidationErrors(name)">
-                {{error}}
-              </p>
+              <ul>
+                <li *ngFor="let error of getValidationErrors(name)">
+                  {{error}}
+                </li>
+              </ul>
+              
             </div>
           </div>
 
@@ -28,32 +37,50 @@
             <label>Description</label>
             <textarea required [(ngModel)]="newProduct.description" name="pDescription" #description="ngModel"
               class="form-control"></textarea>
-            <div class="alert alert-danger" *ngIf="!description.valid && description.touched">
-              Description is required.
-            </div>
+              <div class="alert alert-danger" *ngIf="(formSubmitted) && description.invalid">
+                <!--aşağıdaki "description" tanımlanan "#description"dir-->
+                <ul>
+                  <li *ngFor="let error of getValidationErrors(description)">
+                    {{error}}
+                  </li>
+                </ul>
+                
+              </div>
           </div>
 
           <div class="form-group">
             <label>Price</label>
             <input required [(ngModel)]="newProduct.price" name="pPrice" #price="ngModel" type="text"
               class="form-control">
-            <div class="alert alert-danger" *ngIf="!price.valid && price.touched">
-              Price is required.
-            </div>
+              <div class="alert alert-danger" *ngIf="(formSubmitted) && price.invalid">
+                <!--aşağıdaki "price" tanımlanan "#price"dir-->
+                <ul>
+                  <li *ngFor="let error of getValidationErrors(price)">
+                    {{error}}
+                  </li>
+                </ul>
+                
+              </div>
           </div>
 
           <div class="form-group">
             <label>Image Url</label>
             <input required [(ngModel)]="newProduct.imageUrl" name="pImageUrl" #imageUrl="ngModel" type="text"
               class="form-control">
-            <div class="alert alert-danger" *ngIf="!imageUrl.valid && imageUrl.touched">
-              Image is required.
-            </div>
+              <div class="alert alert-danger" *ngIf="(formSubmitted) && imageUrl.invalid">
+                <!--aşağıdaki "imageUrl" tanımlanan "#imageUrl"dir-->
+                <ul>
+                  <li *ngFor="let error of getValidationErrors(imageUrl)">
+                    {{error}}
+                  </li>
+                </ul>
+                
+              </div>
           </div>
 
 
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" [disabled]="formSubmitted && form.invalid" [class.btn-secondary]="formSubmitted && form.invalid">Submit</button>
         </form>
       </div>
     </div>

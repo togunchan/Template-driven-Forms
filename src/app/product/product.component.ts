@@ -40,8 +40,23 @@ export class ProductComponent {
     }
   }
 
-  getValidationErrors(state: any) {
-    let ctrlName: string = state.name;
+  getFormValidationErrors(form: NgForm): string[] {
+    let messages: string[] = [];
+
+    Object.keys(form.controls).forEach(k=>{
+      console.log(k);
+      console.log(form.controls[k]);
+
+      //FormControl objesinde "name" alanı olmadığı için k ayrıca gönderilir.
+      this.getValidationErrors(form.controls[k],k).forEach(message => messages.push(message));
+    })
+
+    return messages;
+
+  }
+
+  getValidationErrors(state: any, key: string) {
+    let ctrlName: string = state.name || key;
     let messages: string[] = [];
 
     if (state.errors) {
